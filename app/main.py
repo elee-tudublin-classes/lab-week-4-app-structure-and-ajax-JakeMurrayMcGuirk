@@ -30,3 +30,14 @@ app.mount(
     StaticFiles(directory="app/static"),
     name="static",
 )
+
+from app.routes.home_routes import router as home_router
+from app.routes.todo_routes import router as todo_router
+
+main_router = APIRouter()
+
+main_router.include_router(home_router)
+main_router.include_router(todo_router, prefix="/todo", tags=["todo"])
+
+# include routes in app
+app.include_router(main_router)
